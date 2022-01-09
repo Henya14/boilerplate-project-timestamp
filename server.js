@@ -30,3 +30,13 @@ app.get("/api/hello", function (req, res) {
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
+
+app.get("/api/:date", (req, res) => {
+  let convertedDate
+  if(isNaN(+req.params.date)) {
+    convertedDate = new Date(req.params.date) 
+  } else {
+    convertedDate = new Date(+req.params.date) 
+  }
+  res.send({"unix": convertedDate.getTime(), "utc": convertedDate.toUTCString()})
+})
